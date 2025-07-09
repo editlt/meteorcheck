@@ -63,6 +63,7 @@ local mockMeteorEgg = {
 
 local function findOrCreateMeteor()
     local meteor = workspace:FindFirstChild("MeteorEgg")
+    print("found metor")
     if not meteor then
         meteor = Instance.new("Model")
         meteor.Name = "MeteorEgg"
@@ -130,14 +131,7 @@ local function playMeteorCrashPT1()
     mockMeteorEgg:hideMeteor()
     mockMeteorEgg:updateEggRain()
     
-    local cutsceneData = meteor:FindFirstChild("Cutscene")
-    if cutsceneData then
-        cutsceneData = require(cutsceneData)
-    else
-        cutsceneData = CutsceneModule
-    end
-    
-    task.spawn(CutsceneSystem.playCutsceneById, "MeteorCrashPT1", cutsceneData, function()
+    task.spawn(CutsceneSystem.playCutsceneById, "MeteorCrashPT1", CutsceneModule, function()
         print("pt1 completed")
         while CutsceneSystem.getIsPlayingCutscene() do
             task.wait()
@@ -154,14 +148,7 @@ local function playMeteorCrashPT2()
     local meteor = findOrCreateMeteor()
     mockMeteorEgg.adornee = meteor
     
-    local cutsceneData = meteor:FindFirstChild("Cutscene")
-    if cutsceneData then
-        cutsceneData = require(cutsceneData)
-    else
-        cutsceneData = CutsceneModule
-    end
-    
-    task.defer(CutsceneSystem.playCutsceneById, "MeteorCrashPT2", cutsceneData, function()
+    task.defer(CutsceneSystem.playCutsceneById, "MeteorCrashPT2", CutsceneModule, function()
         print("MeteorCrashPT2 completed!")
         
         RemoteUtils.GetRemoteEvent("MeteorCutscene"):FireServer("MeteorCrash")
